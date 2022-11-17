@@ -2,15 +2,13 @@ var express = require('express');
 var nunjucks = require('nunjucks');
 var axios = require('axios');
 var app = express();
-var client_id = "zIAqvKoIcFlaWPLosWYj";
-var client_secret = "dZvmmUa7YD";
+var client_id = 'djFeXFNSLBo30gS8TvF1';
+var client_secret = 'cQCKoEu_dB';
 // replace client id and secret with your owns
-
-
 
 app.set('view engine', 'html');
 
-nunjucks.configure('views', {
+nunjucks.configure({
   express : app,
   watch : true,
 })
@@ -22,11 +20,12 @@ app.get('/', (req, res)=>{
   res.render('main');
 });
 
-app.post('/search', async(req, res)=>{
-  //query = req.body.query;
+app.get('/search/blog', async (req, res)=>{
+  query = req.body.query;
+  console.log(query)
   // get query input
 
-  var api_url = 'https://openapi.naver.com/v1/search/blog?query=' + encodeURI(req.body.query);
+  var api_url = 'https://openapi.naver.com/v1/search/blog?query=' + encodeURI(query);
   var options = {
     headers : {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
   }; // headers for get request
@@ -34,6 +33,7 @@ app.post('/search', async(req, res)=>{
   .then((response)=>{
     if(response.status===200){
       items = response.data.items;
+      console.log(items)
       items.map((x)=>{
         x.title = x.title.replace(/<b>/g, '');
         x.title = x.title.replace(/<\/b>/g, '');
@@ -51,5 +51,5 @@ app.post('/search', async(req, res)=>{
 
 
  app.listen(3000, function () {
-   console.log('http://localhost:3000/search/blog?query=검색어 app listening on port 3000!');
+   console.log('http://127.0.0.1:3000/search/blog?query=검색어 app listening on port 3000!');
  });

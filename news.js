@@ -2,10 +2,9 @@
 // 네이버 검색 Open API 예제 - 블로그 검색
 var express = require('express');
 var app = express();
-var client_id = "zIAqvKoIcFlaWPLosWYj"; // 발급받은 CLIENT ID를 넣어줍니다.
-var client_secret = "dZvmmUa7YD"; // 발급받은 CLIENT SECRET을 넣어줍니다.
-
-
+var client_id = 'djFeXFNSLBo30gS8TvF1'; // 발급받은 CLIENT ID를 넣어줍니다.
+var client_secret = 'cQCKoEu_dB'; // 발급받은 CLIENT SECRET을 넣어줍니다.
+const request = require("request")
 app.get('/search/blog', function (req, res) {
    var api_url = 'https://openapi.naver.com/v1/search/blog?query=' + encodeURI(req.query.query); // json 결과
 //   var api_url = 'https://openapi.naver.com/v1/search/blog.xml?query=' + encodeURI(req.query.query); // xml 결과
@@ -19,12 +18,11 @@ app.get('/search/blog', function (req, res) {
        res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
        res.end(body);
      } else {
-      console.log('error = ' + response.statusCode); 
-      res.status(response.statusCode).end();
-       
+       res.status(response.statusCode).end();
+       console.log('error = ' + response.statusCode);
      }
    });
  });
- app.listen3000, function () {
-   console.log('http://localhost:3000/search/blog?query=검색어 app listening on port 3000!');
- };
+ app.listen(3000, function () {
+   console.log('http://127.0.0.1:3000/search/blog?query=검색어 app listening on port 3000!');
+ });
